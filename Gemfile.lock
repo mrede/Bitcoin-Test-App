@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/lian/bitcoin-ruby
+  revision: 69123208d45a19da446c5e0079d4fa2e225e5be6
+  branch: master
+  specs:
+    bitcoin-ruby (0.0.6)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -53,6 +60,7 @@ GEM
     debug_inspector (0.0.2)
     diff-lcs (1.2.5)
     erubis (2.7.0)
+    eventmachine (1.0.7)
     execjs (2.5.2)
     factory_girl (4.5.0)
       activesupport (>= 3.0.0)
@@ -165,8 +173,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bitcoin-ruby!
   byebug
   coffee-rails (~> 4.1.0)
+  eventmachine
   factory_girl_rails
   jbuilder (~> 2.0)
   jquery-rails

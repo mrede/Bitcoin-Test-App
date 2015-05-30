@@ -45,3 +45,9 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.0'
   gem "factory_girl_rails"
 end
+
+# Event machine for server listener
+gem 'eventmachine'
+
+# Bitcoin library
+gem 'bitcoin-ruby', git: 'https://github.com/lian/bitcoin-ruby', branch: 'master', require: 'bitcoin'
