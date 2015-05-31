@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :address do
     association :wallet
-    val "MyString"
+    val '(\d{8}$)'
   end
 
 end
