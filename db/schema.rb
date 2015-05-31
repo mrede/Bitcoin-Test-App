@@ -14,11 +14,11 @@
 ActiveRecord::Schema.define(version: 20150530234254) do
 
   create_table "wallets", force: :cascade do |t|
-    t.string   "private_key"
-    t.string   "public_key"
-    t.string   "name"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.string   "private_key", limit: 255
+    t.string   "public_key",  limit: 255
+    t.string   "name",        limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
 end

@@ -50,6 +50,8 @@ group :development, :test do
   gem "factory_girl_rails"
 end
 
+# Mysql
+gem 'mysql2'
 
 
 # Event machine for server listener
