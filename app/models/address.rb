@@ -7,13 +7,24 @@ class Address < ActiveRecord::Base
 		return false unless !outputs.nil?
 
     	outputs.each do |out|
-      address = Address.where("val=?", out.parsed_script.get_addresses).first
-      
-      unless address.nil?
-        
-        return address
+        addresses = out.parsed_script.get_addresses
+        puts "ADddreses #{addresses}"
 
-      end
+        if addresses.kind_of?(String)
+          addresses = [addresses]
+        end
+        addresses.each  do |addr|
+          address = Address.where("val=?", addr).first
+
+          puts "VALUE #{out.amount}"
+          unless address.nil?
+            return address
+          end
+
+        end
+      
+      
+      return false
       
     end
 	end
