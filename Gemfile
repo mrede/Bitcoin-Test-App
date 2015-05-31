@@ -34,6 +34,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 group :test do
   gem 'shoulda-matchers'
+  gem "faker"
 end
 
 group :development, :test do
