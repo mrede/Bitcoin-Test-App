@@ -7,14 +7,23 @@ RSpec.describe Address, type: :model do
   describe "#check_outputs" do
   	context "When outputs are emtpy" do
   		it "should return false" do
-  			expect(Address.check_outputs(nil)).to equal(false)
+  			expect(Address.match_outputs_to_address(nil)).to equal(false)
   		end
   	end
   	context "When outputs contain a destination address that we own" do
   		it "should create a new transaction" do
-  			expect {
 
-          }.to change(Transaction, :count).by(1)
+        # Create wallet
+        wallet = create(:wallet_with_address)
+
+        # Create some Mock TXOuts. # This can be greatly improved late
+        script = double("script")
+        allow(script).to receive(:get_addresses).and_return(wallet.addresses[0].val)
+        output = double("txout")
+        allow(output).to receive(:parsed_script).and_return(script)
+        
+        res = Address.match_outputs_to_address([output])
+  			expect(res.id).to equal(wallet.addresses[0].id)
   		end
   	end
   end

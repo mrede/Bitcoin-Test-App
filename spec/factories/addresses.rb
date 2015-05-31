@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :address do
-    wallet_id ""
-val "MyString"
+    association :wallet
+    val "MyString"
   end
 
 end
