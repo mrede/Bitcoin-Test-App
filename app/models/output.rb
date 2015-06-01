@@ -22,7 +22,7 @@ class Output < ActiveRecord::Base
 
   # Works out how much will be left from these unspent outputs
   def self.calculate_change(inputs, total_amount)
-
+    return 0-total_amount unless inputs
     total = inputs.inject(0){|sum,e| sum += e.value }
     total - total_amount
   end
