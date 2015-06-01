@@ -19,7 +19,6 @@ module Bitcoin
         addresses.each  do |addr|
           address = Address.where("val=?", addr).first
 
-          puts "VALUE #{out.amount} : Address: #{addr} : #{address}"
           unless address.nil?
             our_output = Output.new
             our_output.value = out.amount
@@ -31,10 +30,9 @@ module Bitcoin
       end
       
       if trans.outputs.length ==0
-        puts "Returning no outputs"
         return false
       end
-      puts "Output length #{trans.outputs.length}"
+
       return trans
         
     end
