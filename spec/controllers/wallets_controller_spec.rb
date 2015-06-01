@@ -135,7 +135,7 @@ RSpec.describe WalletsController, type: :controller do
 
     context "with invalid params" do
       it "assigns the wallet as @wallet" do
-       wallet = create(:wallet)
+        wallet = create(:wallet)
         put :update, {:id => wallet.to_param, :wallet => invalid_attributes}, valid_session
         expect(assigns(:wallet)).to eq(wallet)
       end
@@ -150,17 +150,36 @@ RSpec.describe WalletsController, type: :controller do
 
   describe "DELETE #destroy" do
     it "destroys the requested wallet" do
-     wallet = create(:wallet)
+      wallet = create(:wallet)
       expect {
         delete :destroy, {:id => wallet.to_param}, valid_session
       }.to change(Wallet, :count).by(-1)
     end
 
     it "redirects to the wallets list" do
-     wallet = create(:wallet)
+      wallet = create(:wallet)
       delete :destroy, {:id => wallet.to_param}, valid_session
       expect(response).to redirect_to(wallets_url)
     end
+  end
+
+  describe "POST #send" do
+    it "Creates a new transaction" do
+      wallet = create(:wallet)
+      expect {
+        post :send_bitcoins, {:id => wallet.id}, valid_session
+      }.to change(Transaction, :count).by(1)
+      
+    end
+    it "Creates a reduces available spend by amount"
+    it "Links spend output to transaction"
+    it "redirects to wallet show page" do
+      wallet = create(:wallet)
+      post :send_bitcoins, {:id => wallet.id}, valid_session
+      expect(response).to redirect_to(wallet)
+
+    end
+    it "rejects payment when we don't have enough bitcoins"
   end
 
 end
