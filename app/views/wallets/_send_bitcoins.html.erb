@@ -2,21 +2,22 @@
   <%= form_tag send_bitcoins_url(@wallet) do%>
     <h2>Send money</h2>
     <div class="form-group">
-      <%= label_tag(:send_address, :send_to) %>
-      <%= text_field_tag(:send_address, '', class: "form-control") %>
+      <%= label_tag(:send_address, "Send To") %>
+      <%= text_field_tag(:send_address, '', class: "form-control", placeholder: "Enter full Bitcoin Address") %>
     </div>
     <div class="form-group">
-      <%= label(:wallet, :amount) %> (BTC)
-      <%= text_field_tag(:amount, '' , class: "form-control", placeholder: "0.1") %>
+      <%= label(:amount, "Total amount") %> (BTC)
+      <%= text_field_tag(:amount, '' , class: "form-control", placeholder: "Format 0.1") %>
     </div>
     <div class="form-group">
-      <%= label(:wallet, :round) %><br />
-      <input class="form-control" id="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="1" data-slider-max="7" data-slider-step="1" data-slider-value="7"/>
+      <%= label(:round, "Round amount") %><br />
+      <input class="form-control" id="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="1" data-slider-max="7" data-slider-step="1" data-slider-value="7" name="round"/>
     </div>
     <div class="form-group">
       <span class='example'></span>
     </div>
-  <% end %>
+  
 
-  <p><a class="btn btn-primary btn-lg" href="#" role="button">Pay now</a></p>
+  <p><input type='submit' class="btn btn-primary btn-lg" role="button" value='Pay now' /></p>
+  <% end %>
 </div>
