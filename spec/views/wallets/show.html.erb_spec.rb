@@ -5,7 +5,9 @@ RSpec.describe "wallets/show", type: :view do
     @wallet = create(:wallet)
   end
 
-  it "renders attributes in <p>" do
+  it "renders attributes" do
     render
+
+    expect(rendered).to match /#{@wallet.name}/
   end
 end
