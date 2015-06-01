@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Output, type: :model do
   it { should belong_to(:owner_transaction) }
+  it { should belong_to(:as_transaction_input) }
   it { should belong_to(:address) }
 
   describe "#amount_mbtc" do
