@@ -8,4 +8,7 @@ RSpec.describe Address, type: :model do
     address = create(:address)
     expect(address.to_s).to eq(address.val)
   end
+
+  it { should have_many(:outputs)}
+
 end
