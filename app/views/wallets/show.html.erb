@@ -1,5 +1,68 @@
 <p id="notice"><%= notice %></p>
 
-<%= @wallet.name %>
-<%= link_to 'Edit', edit_wallet_path(@wallet) %> |
-<%= link_to 'Back', wallets_path %>
+<div class="row">
+  <div class="col-md-12">
+  	<h2><%= @wallet.name %></h2>
+  </div>
+</div>
+<div class="jumbotron">
+  <h2>Send money</h2>
+  <div class="form-group">
+    <%= label(:wallet, :send_to) %>
+    <%= text_field(:wallet, :name, class: "form-control") %>
+  </div>
+  <div class="form-group">
+    <%= label(:wallet, :amout) %>
+    <%= text_field(:wallet, :name, class: "form-control") %>
+  </div>
+  <div class="form-group">
+    <%= label(:wallet, :round) %>
+    <input id="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="14"/>
+  </div>
+
+  <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+</div>
+<div class="row">
+	<div class="col-md-12">
+		<h3>Addresses<h3>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-4">
+		<table class='table'>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
+
+      <tbody class='table-striped'>
+        <% @wallet.addresses.each do |address| %>
+          <tr class='table-striped'>
+            <td><%= address %></td>
+          </tr>
+          <% address.outputs.each do |output| %>
+          <tr >
+            <td class='text-right'><%= output.value_mbtc %> <i>mBTC</i></td>
+          </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="row">
+
+<%= link_to 'Edit', edit_wallet_path(@wallet), class: "btn btn-info" %> |
+<%= link_to 'Back', wallets_path, class: "btn btn-default" %>
+</div>
+<script>
+
+
+</script>
+<style>
+#ex1Slider .slider-selection {
+  background: #BABABA;
+}</style>

@@ -11,6 +11,20 @@
     </div>
   <% end %>
 
+  <div class="form-group">
+    <%= label(:wallet, :name) %>
+    <%= text_field(:wallet, :name, class: "form-control") %>
+  </div>
+  <div class="form-group">
+    <%= label(:wallet, :public_key) %>
+    <%= text_field(:wallet, :public_key, class: "form-control") %>
+  </div>
+  <div class="form-group">
+    <%= label(:wallet, :private_key) %>
+    <%= text_field(:wallet, :private_key, class: "form-control") %>
+  </div>
+  
+
   <div class="actions">
     <%= f.submit %>
   </div>
