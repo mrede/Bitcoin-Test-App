@@ -1,15 +1,15 @@
 class Transaction < ActiveRecord::Base
 
-  validates_presence_of :unique_key, :value, :raw
-  belongs_to :address
+  validates_presence_of :unique_hash, :original_json
+  validates_uniqueness_of :unique_hash
+  has_many :outputs
 
 
-  def self.create_from_tx(tx, address)
+
+  def self.create_from_tx(tx)
     t = Transaction.new
-    t.unique_key = tx.hash
-    t.address = address
-    t.value = 123
-    t.raw = 123
+    t.unique_hash = tx.hash
+    t.original_json = "BLAH"
     res = t.save
 
     puts "TRAN #{t.id} = #{res} #{t.errors.to_hash}"
