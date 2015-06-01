@@ -28,4 +28,8 @@ class Address < ActiveRecord::Base
       
     end
 	end
+
+  def to_s
+    self.val
+  end
 end
