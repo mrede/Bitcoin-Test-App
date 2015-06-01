@@ -65,6 +65,10 @@ class WalletsController < ApplicationController
   def send_bitcoins
 
     @wallet = Wallet.find(params[:id])
+
+    outputs = Output.find_for_amount(params[:amount], @wallet)
+
+    # "send_address"=>"ABC", "amount"=>"0.1", "round"=>"5"
     respond_to do |format|
       format.html { redirect_to @wallet, notice: 'Bitcoins have been sent.' }
       format.json { head :no_content }
