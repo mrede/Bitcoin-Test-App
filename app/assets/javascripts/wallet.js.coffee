@@ -13,6 +13,7 @@ $ ->
 
     # console.log("VALUE",output, value, amt_field, round)
     $('.example').text("("+round+") "+output)
+    $('#rounded_amount').val(round)
 
   get_example_text = (value) ->
     value = parseInt(value)

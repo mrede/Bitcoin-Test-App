@@ -16,8 +16,13 @@
     <div class="form-group">
       <span class='example'></span>
     </div>
+    <div class="form-group">
+      <%= label(:tx_fee, "TX Fee") %> (BTC)
+      <%= text_field_tag(:tx_fee, '0.0001' , class: "form-control", placeholder: "Format 0.1") %>
+    </div>
   
 
   <p><input type='submit' class="btn btn-primary btn-lg" role="button" value='Pay now' /></p>
+  <%= hidden_field_tag(:rounded_amount, 0) %>
   <% end %>
 </div>
