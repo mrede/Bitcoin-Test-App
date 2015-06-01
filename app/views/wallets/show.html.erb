@@ -6,24 +6,26 @@
   </div>
 </div>
 <div class="jumbotron">
-  <h2>Send money</h2>
-  <div class="form-group">
-    <%= label_tag(:send_address, :send_to) %>
-    <%= text_field_tag(:send_address, '', class: "form-control") %>
-  </div>
-  <div class="form-group">
-    <%= label(:wallet, :amount) %> (BTC)
-    <%= text_field_tag(:amount, '' , class: "form-control", placeholder: "0.1") %>
-  </div>
-  <div class="form-group">
-    <%= label(:wallet, :round) %><br />
-    <input class="form-control" id="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="1" data-slider-max="7" data-slider-step="1" data-slider-value="7"/>
-  </div>
-  <div class="form-group">
-    <span class='example'></span>
-  </div>
+  <%= form_tag %>
+    <h2>Send money</h2>
+    <div class="form-group">
+      <%= label_tag(:send_address, :send_to) %>
+      <%= text_field_tag(:send_address, '', class: "form-control") %>
+    </div>
+    <div class="form-group">
+      <%= label(:wallet, :amount) %> (BTC)
+      <%= text_field_tag(:amount, '' , class: "form-control", placeholder: "0.1") %>
+    </div>
+    <div class="form-group">
+      <%= label(:wallet, :round) %><br />
+      <input class="form-control" id="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="1" data-slider-max="7" data-slider-step="1" data-slider-value="7"/>
+    </div>
+    <div class="form-group">
+      <span class='example'></span>
+    </div>
+  </form>
 
-  <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+  <p><a class="btn btn-primary btn-lg" href="#" role="button">Pay now</a></p>
 </div>
 <div class="row">
 	<div class="col-md-12">
@@ -31,11 +33,12 @@
 	</div>
 </div>
 <div class="row">
-	<div class="col-md-4">
+	<div class="col-md-6">
 		<table class='table'>
       <thead>
         <tr>
           <th>Name</th>
+          <th>Received</th>
           <th colspan="3"></th>
         </tr>
       </thead>
@@ -48,6 +51,7 @@
           <% address.outputs.each do |output| %>
           <tr >
             <td class='text-right'><%= output.value_mbtc %> <i>mBTC</i></td>
+            <td><%= output.created_at %></td>
           </tr>
           <% end %>
         <% end %>
