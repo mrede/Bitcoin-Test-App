@@ -164,22 +164,61 @@ RSpec.describe WalletsController, type: :controller do
   end
 
   describe "POST #send" do
+    before(:each) do
+      # Setup wallet with stuff to spend
+      test_key = ["38881e8ffea9cb2104562b7ebfb6a5de4c2b22929454a5f57361a14187c28e20", "04b47769b1f0284a3be1256c5458222547612028db9c218b9fe544a6ea49b6f553dd72fa169d15fa6bfcb8753f26c0bc5045b5b5788e621a0489580d1fe26b569b"]
+      @wallet = create(:wallet, private_key: test_key[0], public_key: test_key[1])
+      @address = create(:address, wallet: @wallet, val: Bitcoin::pubkey_to_address(test_key[1]))
+      output_1 = create(:unspent_output, value: 10000, address: @address)
+      output_2 = create(:unspent_output, value: 20000, address: @address)
+      trans = create(:transaction, unique_hash: "6f8ecad2cd68d40d4ce742bd3085b497f997c436b6fbf95a0081dee489a708ab")
+      output_3 = create(:unspent_output, value: 30000, address: @address, owner_transaction: trans)
+    end
+
     it "Creates a new transaction" do
-      wallet = create(:wallet)
+
+      amount = 0.000015
+      tx_fee = 0.000001
+      rounded_amount = 0.00002
+      send_address = "2Mxp4Qom7bSB4tBADBjKUqqextETC9tsozZ"
+
       expect {
-        post :send_bitcoins, {:id => wallet.id}, valid_session
+        post :send_bitcoins, {
+          :id => @wallet.id, 
+          :amount => amount, 
+          :tx_fee => tx_fee, 
+          :rounded_amount => rounded_amount,
+          :send_address => send_address
+        }, valid_session
       }.to change(Transaction, :count).by(1)
       
     end
     it "Creates a reduces available spend by amount"
     it "Links spend output to transaction"
     it "redirects to wallet show page" do
-      wallet = create(:wallet)
-      post :send_bitcoins, {:id => wallet.id}, valid_session
-      expect(response).to redirect_to(wallet)
+      
+      post :send_bitcoins, {:id => @wallet.id}, valid_session
+      expect(response).to redirect_to(@wallet)
 
     end
     it "rejects payment when we don't have enough bitcoins"
   end
 
+  # describe "#create_outputs" do
+  #   it "should return three outputs" do
+  #     # Testing private method
+  #     WalletsController.send(:public, *WalletsController.private_instance_methods)
+      
+  #     w = WalletsController.new
+
+      
+  #     send_amount = 1234000
+  #     round_up_amount = 66000
+  #     fee = 1000
+  #     result = w.create_outputs(send_amount,round_up_amount,fee)
+
+  #     expect(result.class).to eq(Array)
+  #     expect(result.length).to eq(3)
+  #   end
+  # end
 end
