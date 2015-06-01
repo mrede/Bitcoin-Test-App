@@ -63,3 +63,6 @@ gem 'bitcoin-ruby', git: 'https://github.com/lian/bitcoin-ruby', branch: 'master
 
 # Bootstrap
 gem 'bootstrap-sass'
+
+# FFI
+gem 'ffi'
