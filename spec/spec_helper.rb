@@ -14,6 +14,9 @@
 #
 # The `.rspec` file also contains a few flags that are not defaults but that
 # users commonly want.
+
+$LOAD_PATH << '../lib'
+
 require 'factory_girl_rails'
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
@@ -31,6 +34,8 @@ RSpec.configure do |config|
     #     # => "be bigger than 2"
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
     config.include FactoryGirl::Syntax::Methods
+
+
   end
 
 

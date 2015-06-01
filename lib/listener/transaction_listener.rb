@@ -6,18 +6,25 @@ require 'rubygems'
 require 'active_record'
 require 'yaml'
 
+
 # Add models
 require_relative '../../app/models/address'
-#require_relative '../../app/models/transactions'
+require_relative '../../app/models/transaction'
+require_relative '../../app/models/output'
 
 Bundler.setup
 
+
 require 'bitcoin'
+require_relative '../../lib/bitcoin/tx_extensions'
 
 
 
-Bitcoin::network = ARGV[0] || :bitcoin
 
+if $0 == __FILE__
+  Bitcoin::network = ARGV[0] || :bitcoin
+  puts "Bitcoin::network #{Bitcoin::network }"
+end
 
 class TransactionListener < Bitcoin::Connection
 
@@ -25,9 +32,18 @@ class TransactionListener < Bitcoin::Connection
   def on_tx(tx)
     return false unless !tx.nil?
     p ['tx', tx.hash, Time.now]
-    puts tx.to_json
 
-    Address.check_outputs(tx.outputs)
+    transaction = tx.create_transaction(tx.outputs)
+
+    if transaction
+       puts tx.to_json
+       # save tx
+      transaction.original_json=tx.to_json
+      transaction.unique_hash = tx.hash
+      transaction.save()
+
+      
+    end
   end
 
   # Dummy as current version seems to be missing
@@ -39,6 +55,7 @@ class TransactionListener < Bitcoin::Connection
 end
 
 
+
 if $0 == __FILE__
 
   # Load DB
@@ -47,12 +64,12 @@ if $0 == __FILE__
 
   EM.run do
 
-    host = '127.0.0.1'
+    host = '104.131.149.35'
 
     connections = []
-    #RawJSON_Connection.connect(host, 18333, [])
-    p "Starting connection listener"
-    TransactionListener.connect_random_from_dns(connections)
+    TransactionListener.connect(host, 18333, [])
+    #p "Starting connection listener"
+    #TransactionListener.connect_random_from_dns(connections)
 
   end
 end
