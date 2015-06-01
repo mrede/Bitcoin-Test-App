@@ -67,6 +67,28 @@ RSpec.describe Output, type: :model do
     end
   end
 
+  describe "#calculate_change" do
+    it "should return the correct change amount" do
+      outputs = []
+      address = create(:address)
+      outputs << create(:unspent_output, value: 10000, address: address)
+      outputs << create(:unspent_output, value: 20000, address: address)
+      outputs <<  create(:unspent_output, value: 30000, address: address)
+
+      amount = 35000 # Amount larger than single output
+
+      change = Output.calculate_change(outputs, amount)
+
+      expect(change).to equal(25000)
+    end
+    it "returns if inputs are empty" do 
+      change = Output.calculate_change([], 3500)
+
+      expect(change).to equal(-3500)
+      
+    end
+  end
+
   it "#to_s returns the value" do
     output = create(:output)
     expect(output.to_s).to eq(output.value)

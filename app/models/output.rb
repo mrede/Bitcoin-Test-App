@@ -9,6 +9,7 @@ class Output < ActiveRecord::Base
 
   # Find any outputs belonging to a wallet that can equal or lower amount
   def self.find_for_amount(amount, wallet)
+    return false unless !amount.nil?
     outputs = []
 
     # Check if there is a single amount we can use
@@ -17,6 +18,13 @@ class Output < ActiveRecord::Base
 
     # We don't have a single amount - find a group of outputs that satisfy
     outputs = Output.find_grouped_for_amount(amount, wallet)
+  end
+
+  # Works out how much will be left from these unspent outputs
+  def self.calculate_change(inputs, total_amount)
+
+    total = inputs.inject(0){|sum,e| sum += e.value }
+    total - total_amount
   end
 
   def to_s
