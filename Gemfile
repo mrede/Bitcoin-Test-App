@@ -60,3 +60,6 @@ gem 'eventmachine'
 
 # Bitcoin library
 gem 'bitcoin-ruby', git: 'https://github.com/lian/bitcoin-ruby', branch: 'master', require: 'bitcoin'
+
+# Bootstrap
+gem 'bootstrap-sass'
