@@ -14,7 +14,7 @@ class Output < ActiveRecord::Base
 
     # Check if there is a single amount we can use
     output = Output.joins(:owner_transaction, address: :wallet).where(
-      "value > ? AND wallets.id = ? AND as_transaction_input_id IS NULL AND transactions.confirmed = 1", 
+      "value > ? AND wallets.id = ? AND as_transaction_input_id IS NULL AND transactions.confirmed > 0", 
       amount, wallet.id).order(value: :asc).first
     return [output] unless output.nil?
 
@@ -38,7 +38,7 @@ private
   # Find a group of outputs that total the amount. We could make this a lot better, but will suffice for demo
   def self.find_grouped_for_amount(amount, wallet)
     outputs = Output.joins(:owner_transaction, address: :wallet).where(
-      "wallets.id = ? AND as_transaction_input_id IS NULL AND transactions.confirmed = 1", 
+      "wallets.id = ? AND as_transaction_input_id IS NULL AND transactions.confirmed > 0", 
       wallet.id).order(value: :desc)
     
     # Find 
