@@ -26,6 +26,7 @@ $ ->
       when 5 then output = "Nearest 10 μBtc"
       when 6 then output = "Nearest 1 μBtc"
       when 7 then output = "Nearest 1 Finney"
+      when 8 then output = "No rounding"
     return output
 
   $('#ex1').slider formatter: (value) ->

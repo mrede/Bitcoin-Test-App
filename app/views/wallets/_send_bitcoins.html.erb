@@ -7,11 +7,11 @@
     </div>
     <div class="form-group">
       <%= label(:amount, "Total amount") %> (BTC)
-      <%= number_field_tag(:amount, '' , class: "form-control", placeholder: "Format 0.1", required: true) %>
+      <%= number_field_tag(:amount, '' , class: "form-control", placeholder: "Format 0.1", required: true, autocomplete: 'off', step: '0.00000001') %>
     </div>
     <div class="form-group">
       <%= label(:round, "Round amount") %><br />
-      <input class="form-control" id="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="1" data-slider-max="7" data-slider-step="1" data-slider-value="7" name="round" />
+      <input class="form-control" id="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="1" data-slider-max="8" data-slider-step="1" data-slider-value="8" name="round" />
     </div>
     <div class="form-group">
       <span class='example'>No amount entered</span>
