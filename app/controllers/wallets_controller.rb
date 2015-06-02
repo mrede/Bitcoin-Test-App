@@ -151,22 +151,21 @@ class WalletsController < ApplicationController
             o.script {|s| s.recipient new_output[:address] }
           end
         end
-        # t.output do |o|
-        # o.value 4840000 # 0.49 BTC, leave 0.01 BTC as fee
-        # o.script {|s| s.recipient key.addr }
-        # end
-
-        # # add another output spending the remaining amount back to yourself
-        # # if you want to pay a tx fee, reduce the value of this output accordingly
-        # # if you want to keep your financial history private, use a different address
-        # t.output do |o|
-        #   o.value 4840000 # 0.49 BTC, leave 0.01 BTC as fee
-        #   o.script {|s| s.recipient key.addr }
-        # end
 
       end
 
       new_tx
+    end
+
+    # Matches address to index in outputs
+    def get_address_index(outputs, address)
+      outputs.each_with_index {|out, index|
+        if (out.parsed_script.get_addresses & [address]).any?
+          # we found it
+          return index
+        end
+      }
+      return 0
     end
 
     def bin_to_hex(s)
