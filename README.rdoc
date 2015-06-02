@@ -12,6 +12,21 @@ The code consists of two core features:
 
 This was built on top of https://github.com/lian/bitcoin-ruby
 
+== Requirements
+* Ruby 2.1.2
+* MySQL
+
+== Installation
+
+Get the repo
+
+  git@github.com:mrede/Bitcoin-Test-App.git
+
+Install all the requirements
+
+  gem install bundler
+  bundler install
+
 == The Wallet
 
 This is a fairly arbitrary implementation of a Wallet. With no security features built in as I was mainly concentrating on getting a working implementation.
@@ -22,7 +37,7 @@ The site is built in RoR
 
 === Start web server
 
-./bin/rails server
+  ./bin/rails server
 
 == The Server
 
@@ -30,4 +45,4 @@ A simple server based in Event Machine, listens for Transaction and Block events
 
 === Start server
 
-./bin/bitcoin_server
+  ./bin/bitcoin_server
