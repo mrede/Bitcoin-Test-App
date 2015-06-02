@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150601164609) do
+ActiveRecord::Schema.define(version: 20150602020133) do
 
   create_table "addresses", force: :cascade do |t|
     t.integer  "wallet_id",  limit: 4
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20150601164609) do
     t.text     "original_json", limit: 65535
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
+    t.boolean  "confirmed",     limit: 1
   end
 
   create_table "wallets", force: :cascade do |t|

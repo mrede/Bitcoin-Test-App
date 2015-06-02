@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :transaction, aliases: [:owner_transaction, :as_transaction_input] do
     unique_hash {(0...50).map { ('a'..'z').to_a[rand(26)] }.join}
-    
+    confirmed 1
     original_json '{
   "hash":"6f8ecad2cd68d40d4ce742bd3085b497f997c436b6fbf95a0081dee489a708ab",
   "ver":1,
