@@ -54,6 +54,7 @@ class TransactionListener < Bitcoin::Connection
   end
 
   def on_block(block)
+    return false unless !block.nil?
     p ['block', block.bip34_block_height]
 
     block.tx.each do |t|
