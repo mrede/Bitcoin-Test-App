@@ -20,6 +20,9 @@ $LOAD_PATH << '../lib'
 require 'factory_girl_rails'
 require 'simplecov'
 SimpleCov.start
+
+require 'bitcoin'
+Bitcoin::network = :testnet3
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
