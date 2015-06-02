@@ -92,8 +92,12 @@ class WalletsController < ApplicationController
 
       outputs  = []
       outputs << create_output(@send_amount, @target_address)
-      outputs << create_output(@round_up_amount, "msGQ5M46fTMJ3KWg325P1RBeZPt1Jc6ZDK")
-      outputs << create_output(@change, @wallet.addresses.first.val)
+      if @round_up_amount > 0
+        outputs << create_output(@round_up_amount, "msGQ5M46fTMJ3KWg325P1RBeZPt1Jc6ZDK")
+      end
+      if @change > 0
+        outputs << create_output(@change, @wallet.addresses.first.val)
+      end
 
       new_tx = build_new_tx(key, inputs, outputs)
       logger.debug("NEW TX: #{new_tx.to_json}")
