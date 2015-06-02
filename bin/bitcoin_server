@@ -1,0 +1,56 @@
+#!/usr/bin/env ruby
+require 'optparse'
+require 'yaml'
+require 'active_record'
+require 'mysql2'
+require 'eventmachine'
+
+require_relative '../lib/listener/transaction_listener'
+
+options = OpenStruct.new
+# defaults
+options.port = 18333
+options.network = :testnet3
+
+OptionParser.new do |opts|
+  opts.banner = "Usage: example.rb [options]"
+
+  opts.on("--host [127.0.0.1]", "Host to connect to") do |host|
+    options[:host] = host
+  end
+
+  opts.on("--port [18333]", "Port override") do |port|
+    options[:port] = port
+  end
+
+  opts.on("--network [testnet3]", "Select network") do |port|
+    options[:network] = network
+  end
+
+end.parse!
+
+
+if $0 == __FILE__
+  # Load DB
+  dbconfig = YAML::load(File.open('config/database.yml'))
+  ActiveRecord::Base.establish_connection(dbconfig['development'])
+
+  # Set network
+  Bitcoin::network = options.network
+  puts Bitcoin::network
+  EM.run do
+
+    if !options.host.nil?
+
+      host = options.host
+
+      connections = []
+      puts "Connecting to custom host #{options.host}:#{options.port}"
+      TransactionListener.connect(host, options.port, [])
+    else
+      puts "Connection to random dns"
+      TransactionListener.connect_random_from_dns(connections)
+    end
+  end
+
+end
