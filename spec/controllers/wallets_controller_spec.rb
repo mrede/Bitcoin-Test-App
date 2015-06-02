@@ -190,17 +190,13 @@ RSpec.describe WalletsController, type: :controller do
           :rounded_amount => rounded_amount,
           :send_address => send_address
         }, valid_session
+
+        expect(response).to redirect_to(@wallet)
       }.to change(Transaction, :count).by(1)
       
     end
     it "Creates a reduces available spend by amount"
     it "Links spend output to transaction"
-    it "redirects to wallet show page" do
-      
-      post :send_bitcoins, {:id => @wallet.id}, valid_session
-      expect(response).to redirect_to(@wallet)
-
-    end
     it "rejects payment when we don't have enough bitcoins"
   end
 

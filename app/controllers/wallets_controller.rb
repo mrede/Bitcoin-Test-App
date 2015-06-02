@@ -99,18 +99,20 @@ class WalletsController < ApplicationController
 
       new_tx = build_new_tx(key, inputs, outputs)
       puts "NEW TX: #{new_tx.to_json}"
-      # if inputs
-      #   inputs.each do |out|
-      #     p "HELLO #{out.owner_transaction.unique_hash}"
-      #     # Try and create from TX
-      #     tx = Bitcoin::P::Tx.from_json(out.owner_transaction.original_json)
-      #     p "TX: #{tx.to_json}"
-      #   end
-      # end
-      # respond_to do |format|
-      #   format.html { redirect_to @wallet, notice: 'Bitcoins have been sent.' }
-      #   format.json { head :no_content }
-      # end
+      puts "HEX #{bin_to_hex(new_tx.to_payload)}"
+      
+      trans = Transaction.new
+      trans.inputs << inputs
+      trans.original_json = new_tx.to_json
+      trans.unique_hash = new_tx.hash
+      # We don't need to record outputs as they will appear from server
+      trans.save
+
+      respond_to do |format|
+        format.html { redirect_to @wallet, notice: 'Bitcoins have been sent.' }
+        format.json { head :no_content }
+      end
+
     else
       respond_to do |format|
         format.html { redirect_to @wallet, error: 'No available outputs.' }
