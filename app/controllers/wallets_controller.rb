@@ -106,22 +106,26 @@ class WalletsController < ApplicationController
       
       Transaction.create_from_tx(inputs, new_tx)
       
-      # Send
-      rpc = BitcoinRPC.new('http://Ulysseys:YourPassword@127.0.0.1:8332') # TODO set config
-      rpc.send_raw_trans(bin_to_hex(new_tx.to_payload))
+      begin
+        # Send
+        rpc = BitcoinRPC.new('http://Ulysseys:YourPassword@127.0.0.1:8332') # TODO set config
+        rpc.send_raw_trans(bin_to_hex(new_tx.to_payload))
 
-      respond_to do |format|
-        format.html { redirect_to @wallet, notice: 'Bitcoins have been sent.' }
-        format.json { head :no_content }
-      end
-
-    else
-      respond_to do |format|
-        format.html { redirect_to @wallet, error: 'No available outputs.' }
-        format.json { head :no_content }
+        respond_to do |format|
+          format.html { redirect_to @wallet, notice: 'Bitcoins have been sent.' }
+          format.json { head :no_content }
+        end
+        return
+      rescue Bitcoin::BitcoinRPC::BitcoinRPCError
+        # TODO handle the error gracefully
       end
     end
 
+    flash[:error] = 'Not enough Bitcoins available.'
+    respond_to do |format|
+        format.html { redirect_to @wallet  }
+        format.json { head :no_content }
+      end
     
     
   end
