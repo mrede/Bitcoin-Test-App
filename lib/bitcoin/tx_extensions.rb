@@ -5,7 +5,14 @@ module Bitcoin
       return false unless !outputs.nil?
 
       # Return aray of transactions
-      trans = Transaction.new
+      trans = Transaction.where(:unique_hash => self.hash).first
+      if trans.nil?
+        # Trans is nul
+        trans = Transaction.new
+      end
+      if trans.outputs.length > 0
+        return false
+      end
 
       # store hash
 
