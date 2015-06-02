@@ -10,8 +10,9 @@ RSpec.describe TransactionListener, type: :class do
     end
 		context "when transaction is empty" do 
 			it "Should exit gracefully" do 
+        sleep 1.seconds
         EM.run do
-          test = TransactionListener.connect('104.131.149.35', 18333, [])
+          test = TransactionListener.connect('127.0.0.1', 8332, [])
           expect {
             result = test.on_tx(nil)
             expect(result).to equal(false)
@@ -27,14 +28,16 @@ RSpec.describe TransactionListener, type: :class do
     context "when transaction is in dataset" do 
       context "when stored transaction already has outputs" do
         it "should update transaction with outputs" do
+          sleep 1.seconds
           EM.run do
+            sleep 1.seconds
             address = create(:address, val: "mpefodNfRXAnB4ot5BVPfbZudjAe7nUrc7")
             output = create(:unspent_output, value: 1000000, address: address)
             trans = create(:transaction)
             trans.outputs << output
             trans.save
             
-            test = TransactionListener.connect('104.131.149.35', 18333, [])
+            test = TransactionListener.connect('127.0.0.1', 8332, [])
 
             
             tx = Bitcoin::P::Tx.from_json(trans.original_json)
@@ -54,13 +57,15 @@ RSpec.describe TransactionListener, type: :class do
       end
       context "when stored trans doesn't have outputs" do
         it "should update transaction with outputs" do
+          sleep 1.seconds
           EM.run do
-            address = create(:address, val: "3EXdBELAKgrof6FTaFxdh3QMSwpzm5pR7K")
+            sleep 1.seconds
+            address = create(:address, val: "mpefodNfRXAnB4ot5BVPfbZudjAe7nUrc7")
             
             trans = create(:transaction)
             
             
-            test = TransactionListener.connect('104.131.149.35', 18333, [])
+            test = TransactionListener.connect('127.0.0.1', 8332, [])
 
             
             tx = Bitcoin::P::Tx.from_json(trans.original_json)
@@ -85,8 +90,10 @@ RSpec.describe TransactionListener, type: :class do
   describe "#on_block" do
     context "Block invalid" do
       it "returns false" do
+        sleep 1.seconds
         EM.run do
-          test = TransactionListener.connect('104.131.149.35', 18333, [])
+          sleep 1.seconds
+          test = TransactionListener.connect('127.0.0.1', 8332, [])
 
           result = test.on_block(nil)
           expect(result).to equal(false)
@@ -113,8 +120,10 @@ RSpec.describe TransactionListener, type: :class do
           :bip34_block_height => 12345
         )
 
+        sleep 1.seconds
         EM.run do
-          test = TransactionListener.connect('104.131.149.35', 18333, [])
+          sleep 1.seconds
+          test = TransactionListener.connect('127.0.0.1', 8332, [])
 
           result = test.on_block(block)
 
