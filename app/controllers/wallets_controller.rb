@@ -1,4 +1,5 @@
 require 'bitcoin'
+require 'bitcoin/bitcoin_rpc'
 
 include Bitcoin::Builder
 
@@ -84,7 +85,7 @@ class WalletsController < ApplicationController
     
     # Get inputs to spend
     inputs = Output.find_for_amount(@total_amount, @wallet)
-
+    
     if inputs
 
       @change = Output.calculate_change(inputs, @total_amount)
@@ -104,6 +105,10 @@ class WalletsController < ApplicationController
       logger.debug("HEX #{bin_to_hex(new_tx.to_payload)}")
       
       Transaction.create_from_tx(inputs, new_tx)
+      
+      # Send
+      rpc = BitcoinRPC.new('http://Ulysseys:YourPassword@127.0.0.1:8332') # TODO set config
+      rpc.send_raw_trans(bin_to_hex(new_tx.to_payload))
 
       respond_to do |format|
         format.html { redirect_to @wallet, notice: 'Bitcoins have been sent.' }
