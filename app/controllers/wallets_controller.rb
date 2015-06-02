@@ -135,14 +135,11 @@ class WalletsController < ApplicationController
       new_tx = build_tx do |t|
 
         # add the input you picked out earlier
-
         inputs.each do |new_input|
-          puts "PReb out#{new_input.owner_transaction.unique_hash}"
           prev_tx =Bitcoin::P::Tx.from_json(new_input.owner_transaction.original_json)
-          puts "ORIGINAL JSON: #{prev_tx.to_json}"
           t.input do |i|
             i.prev_out prev_tx
-            i.prev_out_index 1 # TODO
+            i.prev_out_index get_address_index(prev_tx.outputs, new_input.address.val)
             i.signature_key key
           end
         end
