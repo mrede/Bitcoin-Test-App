@@ -1,28 +1,23 @@
-== README
+== Bitcoin Round-up Demo app
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a test Bitcoin application demonstrating the use of the following core features of Bitcoin.
 
-Things you may want to cover:
+* Creating a Wallet
+* Receiving Bitcoins via a transaction to a wallet address
+* Sending Bitcoins to a receiving address
 
-* Ruby version
+The code consists of two core features:
+* A website to provide basic wallet features
+* A server for monitoring the Bitcoin network and receiving transactions and block notifications
 
-* System dependencies
+This was built on top of https://github.com/lian/bitcoin-ruby
 
-* Configuration
+== The Wallet
 
-* Database creation
+This is a fairly arbitrary implementation of a Wallet. With no security features built in as I was mainly concentrating on getting a working implementation.
 
-* Database initialization
+The wallet also implements a unique feature: when making payments you can choose to round up the Bitcoin amount to a round number. The idea behind this is that you could nominate a charity or savings / investment wallet to send these micro-payments.
 
-* How to run the test suite
+== The Server
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+A simple server based in Event Machine, listens for Transaction and Block events
