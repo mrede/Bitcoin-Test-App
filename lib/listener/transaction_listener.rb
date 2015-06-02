@@ -33,17 +33,20 @@ class TransactionListener < Bitcoin::Connection
     return false unless !tx.nil?
     p ['tx', tx.hash, Time.now]
 
+
     transaction = tx.create_transaction(tx.outputs)
+    puts "Returned transaction #{transaction}"
 
     if transaction
-       puts tx.to_json
+      puts tx.to_json
        # save tx
       transaction.original_json=tx.to_json
       transaction.unique_hash = tx.hash
-      transaction.save()
+      return transaction.save()
 
       
     end
+    false
   end
 
   # Dummy as current version seems to be missing
