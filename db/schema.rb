@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 20150602020133) do
     t.text     "original_json", limit: 65535
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
-    t.boolean  "confirmed",     limit: 1
+    t.integer  "confirmed",     limit: 4
   end
 
   create_table "wallets", force: :cascade do |t|
