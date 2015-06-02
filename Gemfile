@@ -35,6 +35,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 group :test do
   gem 'shoulda-matchers'
   gem "faker"
+  gem "simplecov", require: false
 end
 
 group :development, :test do
