@@ -18,6 +18,16 @@ This is a fairly arbitrary implementation of a Wallet. With no security features
 
 The wallet also implements a unique feature: when making payments you can choose to round up the Bitcoin amount to a round number. The idea behind this is that you could nominate a charity or savings / investment wallet to send these micro-payments.
 
+The site is built in RoR
+
+=== Start web server
+
+./bin/rails server
+
 == The Server
 
 A simple server based in Event Machine, listens for Transaction and Block events
+
+=== Start server
+
+./bin/bitcoin_server
