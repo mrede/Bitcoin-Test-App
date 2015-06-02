@@ -85,12 +85,10 @@ class WalletsController < ApplicationController
     # Get inputs to spend
     inputs = Output.find_for_amount(@total_amount, @wallet)
 
-    puts "NO. of inputs #{inputs}"
-
     if inputs
 
       @change = Output.calculate_change(inputs, @total_amount)
-      puts "CHANGE: #{@change}, #{@total_amount}"
+      logger.info("Total:#{@total_amount}, Sending #{@send_amount}, Rounded #{@round_amount}, Fee #{@fee}")
 
       outputs  = []
       outputs << create_output(@send_amount, @target_address)
@@ -98,15 +96,10 @@ class WalletsController < ApplicationController
       outputs << create_output(@change, @wallet.addresses.first.val)
 
       new_tx = build_new_tx(key, inputs, outputs)
-      puts "NEW TX: #{new_tx.to_json}"
-      puts "HEX #{bin_to_hex(new_tx.to_payload)}"
+      logger.debug("NEW TX: #{new_tx.to_json}")
+      logger.debug("HEX #{bin_to_hex(new_tx.to_payload)}")
       
-      trans = Transaction.new
-      trans.inputs << inputs
-      trans.original_json = new_tx.to_json
-      trans.unique_hash = new_tx.hash
-      # We don't need to record outputs as they will appear from server
-      trans.save
+      Transaction.create_from_tx(inputs, new_tx)
 
       respond_to do |format|
         format.html { redirect_to @wallet, notice: 'Bitcoins have been sent.' }
