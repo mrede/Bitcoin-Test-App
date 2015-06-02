@@ -133,6 +133,34 @@ RSpec.describe TransactionListener, type: :class do
           EM.stop_event_loop
         end
       end
+      it "marks unconfirmed transaction 2" do
+        wallet = create(:wallet)
+        address = create(:address, wallet: wallet)
+        trans = create(:transaction, confirmed: nil)
+
+        dummy_trans = instance_double("Tx", hash: trans.unique_hash)
+
+        # Create dummy block
+        block = instance_double("Block", :tx => [
+          {hash: "12345"},
+          dummy_trans
+          ],
+          :bip34_block_height => 12345
+        )
+
+        sleep 1.seconds
+        EM.run do
+          sleep 1.seconds
+          test = TransactionListener.connect('127.0.0.1', 8332, [])
+
+          result = test.on_block(block)
+
+          trans.reload
+
+          expect(trans.confirmed).to equal(1)
+          EM.stop_event_loop
+        end
+      end
     end
   end
 
