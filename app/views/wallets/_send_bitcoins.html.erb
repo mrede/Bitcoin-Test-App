@@ -3,18 +3,18 @@
     <h2>Send money</h2>
     <div class="form-group">
       <%= label_tag(:send_address, "Send To") %>
-      <%= text_field_tag(:send_address, '', class: "form-control", placeholder: "Enter full Bitcoin Address") %>
+      <%= text_field_tag(:send_address, '', class: "form-control", placeholder: "Enter full Bitcoin Address", required: true) %>
     </div>
     <div class="form-group">
       <%= label(:amount, "Total amount") %> (BTC)
-      <%= text_field_tag(:amount, '' , class: "form-control", placeholder: "Format 0.1") %>
+      <%= number_field_tag(:amount, '' , class: "form-control", placeholder: "Format 0.1", required: true) %>
     </div>
     <div class="form-group">
       <%= label(:round, "Round amount") %><br />
-      <input class="form-control" id="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="1" data-slider-max="7" data-slider-step="1" data-slider-value="7" name="round"/>
+      <input class="form-control" id="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="1" data-slider-max="7" data-slider-step="1" data-slider-value="7" name="round" />
     </div>
     <div class="form-group">
-      <span class='example'></span>
+      <span class='example'>No amount entered</span>
     </div>
     <div class="form-group">
       <%= label(:tx_fee, "TX Fee") %> (BTC)
