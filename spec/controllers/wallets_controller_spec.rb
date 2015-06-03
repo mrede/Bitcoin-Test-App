@@ -81,6 +81,11 @@ RSpec.describe WalletsController, type: :controller do
           post :create, {:wallet => valid_attributes}, valid_session
         }.to change(Wallet, :count).by(1)
       end
+      it "creates a new Address" do
+        expect {
+          post :create, {:wallet => valid_attributes}, valid_session
+        }.to change(Address, :count).by(1)
+      end
 
       it "assigns a newly created wallet as @wallet" do
         post :create, {:wallet => valid_attributes}, valid_session

@@ -13,6 +13,12 @@ class Address < ActiveRecord::Base
     outputs = Address.joins(outputs: :owner_transaction).where("addresses.id = ? AND (transactions.confirmed = 0 OR transactions.confirmed IS NULL) and outputs.as_transaction_input_id is NULL", self.id).sum("value")
   end
 
+  def self.build_new_address(public_key)
+    address = Address.new
+    address.val = Bitcoin::pubkey_to_address(public_key)
+    address
+  end
+
   def to_s
     self.val
   end

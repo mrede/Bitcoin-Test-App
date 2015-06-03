@@ -11,6 +11,10 @@ class Wallet < ActiveRecord::Base
     key = Bitcoin::generate_key
     wallet.private_key = key[0]
     wallet.public_key = key[1]
+
+    address = Address.build_new_address(wallet.public_key)
+    wallet.addresses << address
+
     wallet
   end
 

@@ -79,4 +79,13 @@ RSpec.describe Address, type: :model do
     end
   end
 
+  describe "#build_new_address" do
+    it "should return a valid Address" do
+      wallet = Wallet.build_secure_wallet({name: "TESTER"})
+      address = Address.build_new_address(wallet.public_key)
+      expect(address.class).to eq(Address)
+      expect(address.val).to_not equal(nil)
+    end
+  end
+
 end
