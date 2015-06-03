@@ -29,7 +29,7 @@ class WalletsController < ApplicationController
   # POST /wallets
   # POST /wallets.json
   def create
-    @wallet = Wallet.new(wallet_params)
+    @wallet = Wallet.build_secure_wallet(wallet_params)
 
     respond_to do |format|
       if @wallet.save
