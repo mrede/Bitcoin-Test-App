@@ -75,10 +75,12 @@ class WalletsController < ApplicationController
     key = @wallet.bitcoin_key
 
     # Work out all amounts
-    @send_amount = (params[:amount].to_f * 100000000 ).to_i # Amount to send to address
-    @round_up_amount = (params[:rounded_amount].to_f * 100000000 ).to_i - @send_amount # amount of round_up (send to donation bucket)
-    @fee = (params[:tx_fee].to_f * 100000000).to_i # Amount to leave as fee
+    @send_amount = (BigDecimal(params[:amount]) * 100000000 ).to_i # Amount to send to address
+    @round_up_amount = (BigDecimal(params[:rounded_amount]) * 100000000 ).to_i - @send_amount # amount of round_up (send to donation bucket)
+    @fee = (BigDecimal(params[:tx_fee]) * 100000000).to_i # Amount to leave as fee
     @total_amount = @send_amount + @fee + @round_up_amount # The amount we will be deducting from users unspent outputs
+
+    logger.info("Total:#{@total_amount}, Sending #{@send_amount}, Rounded #{@round_amount}, Fee #{@fee}")
 
     # Addres
     @target_address = params[:send_address]
@@ -89,7 +91,7 @@ class WalletsController < ApplicationController
     if inputs
 
       @change = Output.calculate_change(inputs, @total_amount)
-      logger.info("Total:#{@total_amount}, Sending #{@send_amount}, Rounded #{@round_amount}, Fee #{@fee}")
+      
 
       outputs  = []
       outputs << create_output(@send_amount, @target_address)

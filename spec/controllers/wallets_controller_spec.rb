@@ -166,10 +166,10 @@ RSpec.describe WalletsController, type: :controller do
       test_key = ["38881e8ffea9cb2104562b7ebfb6a5de4c2b22929454a5f57361a14187c28e20", "04b47769b1f0284a3be1256c5458222547612028db9c218b9fe544a6ea49b6f553dd72fa169d15fa6bfcb8753f26c0bc5045b5b5788e621a0489580d1fe26b569b"]
       @wallet = create(:wallet, private_key: test_key[0], public_key: test_key[1])
       @address = create(:address, wallet: @wallet, val: Bitcoin::pubkey_to_address(test_key[1]))
-      output_1 = create(:unspent_output, value: 10000, address: @address)
-      output_2 = create(:unspent_output, value: 20000, address: @address)
+      output_1 = create(:unspent_output, value: 1000000, address: @address)
+      output_2 = create(:unspent_output, value: 2000000, address: @address)
       trans = create(:transaction, unique_hash: "6f8ecad2cd68d40d4ce742bd3085b497f997c436b6fbf95a0081dee489a708ab")
-      output_3 = create(:unspent_output, value: 30000, address: @address, owner_transaction: trans)
+      output_3 = create(:unspent_output, value: 3000000, address: @address, owner_transaction: trans)
     end
 
     it "Creates a new transaction" do
@@ -192,9 +192,45 @@ RSpec.describe WalletsController, type: :controller do
       }.to change(Transaction, :count).by(1)
       
     end
-    it "Creates a reduces available spend by amount"
-    it "Links spend output to transaction"
-    it "rejects payment when we don't have enough bitcoins"
+    it "handles rounding properly" do
+      amount = "0.002345"
+      tx_fee = "0.0001"
+      rounded_amount = "0.0024"
+      send_address = "2Mxp4Qom7bSB4tBADBjKUqqextETC9tsozZ"
+
+      expect {
+        post :send_bitcoins, {
+          :id => @wallet.id, 
+          :amount => amount, 
+          :tx_fee => tx_fee, 
+          :rounded_amount => rounded_amount,
+          :send_address => send_address
+        }, valid_session
+
+        expect(response).to redirect_to(@wallet)
+      }.to change(Transaction, :count).by(1)
+
+    end
+    
+    it "rejects payment when we don't have enough bitcoins" do
+
+      amount = "10"
+      tx_fee = "10"
+      rounded_amount = "10"
+      send_address = "2Mxp4Qom7bSB4tBADBjKUqqextETC9tsozZ"
+
+      expect {
+        post :send_bitcoins, {
+          :id => @wallet.id, 
+          :amount => amount, 
+          :tx_fee => tx_fee, 
+          :rounded_amount => rounded_amount,
+          :send_address => send_address
+        }, valid_session
+
+        expect(response).to redirect_to(@wallet)
+      }.to change(Transaction, :count).by(0)
+    end
   end
 
   # describe "#create_outputs" do
