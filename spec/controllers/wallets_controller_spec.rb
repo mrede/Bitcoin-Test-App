@@ -160,7 +160,7 @@ RSpec.describe WalletsController, type: :controller do
     end
   end
 
-  describe "POST #send" do
+  describe "POST #send", :requires_server do
     before(:each) do
       # Setup wallet with stuff to spend
       test_key = ["38881e8ffea9cb2104562b7ebfb6a5de4c2b22929454a5f57361a14187c28e20", "04b47769b1f0284a3be1256c5458222547612028db9c218b9fe544a6ea49b6f553dd72fa169d15fa6bfcb8753f26c0bc5045b5b5788e621a0489580d1fe26b569b"]
