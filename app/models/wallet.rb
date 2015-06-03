@@ -18,6 +18,24 @@ class Wallet < ActiveRecord::Base
     key = Bitcoin::Key.new(self.private_key, self.public_key)
   end
 
+  def get_confirmed_total
+    # Get all wallets and sum total
+    total = 0
+    self.addresses.each do |addr|
+      total += addr.get_confirmed_total
+    end
+    total
+  end
+
+  def get_unconfirmed_total
+    # Get all wallets and sum total
+    total = 0
+    self.addresses.each do |addr|
+      total += addr.get_unconfirmed_total
+    end
+    total
+  end
+
   def to_s
     self.name
   end
