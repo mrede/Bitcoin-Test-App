@@ -2,7 +2,7 @@ require 'rails_helper'
 require 'listener/transaction_listener'
 include Bitcoin
 
-RSpec.describe TransactionListener, type: :class do
+RSpec.describe TransactionListener, :requires_server, type: :class do
 
 	describe "#on_tx" do
     before(:each) do

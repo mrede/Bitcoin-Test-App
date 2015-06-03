@@ -4,7 +4,7 @@ require 'bitcoin/bitcoin_rpc'
 
 #require 'listener/transaction_listener'
 
-RSpec.describe Bitcoin::BitcoinRPC, type: :class do
+RSpec.describe Bitcoin::BitcoinRPC, :requires_server, type: :class do
 
   describe "#method_missing" do
     it "returns result" do
