@@ -1,4 +1,4 @@
-== Bitcoin Round-up Demo app {<img src="https://travis-ci.org/mrede/Bitcoin-Test-App.svg?branch=master" />}[https://travis-ci.org/mrede/Bitcoin-Test-App]
+== Bitcoin Round-up Demo app {<img src="https://travis-ci.org/mrede/Bitcoin-Test-App.svg?branch=master" alt="Build Status" />}[https://travis-ci.org/mrede/Bitcoin-Test-App]
 
 This is a test Bitcoin application demonstrating the use of the following core features of Bitcoin.
 
