@@ -12,7 +12,7 @@ RSpec.describe TransactionListener, type: :class do
 			it "Should exit gracefully" do 
         sleep 1.seconds
         EM.run do
-          test = TransactionListener.connect('127.0.0.1', 8332, [])
+          test = TransactionListener.connect(Rails.application.config.bitcoin_server_host, Rails.application.config.bitcoin_server_port, [])
           expect {
             result = test.on_tx(nil)
             expect(result).to equal(false)
@@ -37,7 +37,7 @@ RSpec.describe TransactionListener, type: :class do
             trans.outputs << output
             trans.save
             
-            test = TransactionListener.connect('127.0.0.1', 8332, [])
+            test = TransactionListener.connect(Rails.application.config.bitcoin_server_host, Rails.application.config.bitcoin_server_port, [])
 
             
             tx = Bitcoin::P::Tx.from_json(trans.original_json)
@@ -65,7 +65,7 @@ RSpec.describe TransactionListener, type: :class do
             trans = create(:transaction)
             
             
-            test = TransactionListener.connect('127.0.0.1', 8332, [])
+            test = TransactionListener.connect(Rails.application.config.bitcoin_server_host, Rails.application.config.bitcoin_server_port, [])
 
             
             tx = Bitcoin::P::Tx.from_json(trans.original_json)
@@ -93,7 +93,7 @@ RSpec.describe TransactionListener, type: :class do
         sleep 1.seconds
         EM.run do
           sleep 1.seconds
-          test = TransactionListener.connect('127.0.0.1', 8332, [])
+          test = TransactionListener.connect(Rails.application.config.bitcoin_server_host, Rails.application.config.bitcoin_server_port, [])
 
           result = test.on_block(nil)
           expect(result).to equal(false)
@@ -123,7 +123,7 @@ RSpec.describe TransactionListener, type: :class do
         sleep 1.seconds
         EM.run do
           sleep 1.seconds
-          test = TransactionListener.connect('127.0.0.1', 8332, [])
+          test = TransactionListener.connect(Rails.application.config.bitcoin_server_host, Rails.application.config.bitcoin_server_port, [])
 
           result = test.on_block(block)
 
@@ -151,7 +151,7 @@ RSpec.describe TransactionListener, type: :class do
         sleep 1.seconds
         EM.run do
           sleep 1.seconds
-          test = TransactionListener.connect('127.0.0.1', 8332, [])
+          test = TransactionListener.connect(Rails.application.config.bitcoin_server_host, Rails.application.config.bitcoin_server_port, [])
 
           result = test.on_block(block)
 

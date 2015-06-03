@@ -39,4 +39,7 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  config.bitcoin_server_host = '104.131.149.35'
+  config.bitcoin_server_port = '18333'
 end
