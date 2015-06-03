@@ -10,7 +10,7 @@ class Address < ActiveRecord::Base
 
   def get_unconfirmed_total
     # Find all unspent outputs
-    outputs = Address.joins(outputs: :owner_transaction).where("addresses.id = ? AND transactions.confirmed != 1 and outputs.as_transaction_input_id is NULL", self.id).sum("value")
+    outputs = Address.joins(outputs: :owner_transaction).where("addresses.id = ? AND (transactions.confirmed = 0 OR transactions.confirmed IS NULL) and outputs.as_transaction_input_id is NULL", self.id).sum("value")
   end
 
   def to_s
